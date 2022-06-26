@@ -302,5 +302,26 @@ int main() {
     // get last cow (N-1)
     std::cout << (cattle.end() - 1)->get_name() << "\n";
 
+    // conditionals
+
+    int iA = 1023;
+    bool flag_test2 = false;
+    char letter = 'd';
+
+    // 0 is false, anything other than 0 is considered "true" aka 1
+
+    if(iA > 1000) // if int iA is higher than 1000
+        std::cout << iA << "\n";
+
+    if(iA%2 == 1) // is number even?
+        std::cout << iA << "\n";
+    else
+        std::cout << "Number is not even: " << iA << "\n";
+
+    if(letter != 'a' && letter != 'e') // is letter a or e? no, so print letter below.
+        std::cout << letter << "\n";
+
+    // i don't cover loops in this file, i have used them above but won't go over while loops.
+
     return 0;
 }
