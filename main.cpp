@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdint> // include C data type library, allows for clear definitions of unsigned, signed, etc datatypes.
+#include <vector>
 
 // UTILIZE cppreference.com incase you need to jog your memory.
 // I do not use namespace standard here, I've been told the hazards and decided against it.
@@ -21,6 +22,58 @@ int age[AGE_LENGTH]; // array of ints, going from 0, 1, 2, 3 (N-1 where N is ind
 // list of floats, implicit conversion would set this to list of float anyway.
 // type needs to be specified for arrays
 float temp[] = {31.5f, 32.7f, 39.8f};
+
+// enums
+
+enum cow_purpose {dairy, meat, hide, pet};
+
+// structures
+
+struct cow {
+    std::string name;
+    int age;
+    unsigned char purpose;
+};
+
+// classes
+// members inside class are private by default, it is recommended to keep data private & functions public
+class cow_class {
+public:
+    // constructor
+    cow_class(std::string name_i, int age_i, unsigned char purpose_i){
+        name = name_i;
+        age = age_i;
+        purpose = purpose_i;
+    }
+    // get functions
+    std::string get_name() {
+        return name;
+    }
+    int get_age() {
+        return age;
+    }
+    unsigned char get_purpose(){
+        return purpose;
+    }
+    // set functions
+    void set_age(int new_age) {
+        age = new_age;
+    }
+    void set_name(std::string new_name) {
+        name = std::move(new_name);
+    }
+    void set_purpose(unsigned char new_purpose){
+        purpose = new_purpose;
+    }
+private:
+    std::string name;
+    int age;
+    unsigned char purpose;
+};
+
+// vectors
+
+std::vector<int> primes;
 
 // be aware macros don't contain types
 #define CAPACITY 5000 // definition do not end with a semicolon
@@ -167,6 +220,87 @@ int main() {
 
     std::cout << fStored << "\n";
     std::cout << "Average: " << avg << "\n";
+
+    // structs
+    cow my_cow;
+    my_cow.age = 5;
+    my_cow.name = "Betty";
+
+    // utilize enum
+    my_cow.purpose = dairy;
+
+    std::cout << my_cow.name << "\n";
+
+    // classes
+    cow_class my_cow2("Black", 7, pet);
+    std::cout << my_cow2.get_name() << "\n";
+
+    // pointers
+
+    // set new pointer of type int to address of int celsius
+    int *ptr = &celsius;
+
+    // original value
+    std::cout << celsius << "\n";
+
+    // print memory address of type int ptr
+    std::cout << &ptr << "\n";
+
+    // print value from ptr
+    std::cout << *ptr << "\n";
+
+    // print memory address of celsius
+    std::cout << &celsius << "\n";
+
+    // dynamic memory management & pointers go brrrr
+    // define pointer to class
+    cow_class* my_cow3;
+    // allocate memory
+    my_cow3 = new cow_class("Hyde", 3, hide);
+    // use, dereference pointer using ->
+    std::cout << my_cow3->get_name() << "\n";
+    // free memory after usage
+    delete my_cow3;
+
+    // references
+    // references are not pointers or objects & don't contain an address, so no reference arrays :(
+    // no reference to another reference, however a reference will reference the variable you try to reference from.
+    // references must be initialized at declaration
+    // have a fixed data type & object
+
+    // vectors!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // dynamically sized containers baby
+
+    // push to vector
+    primes.push_back(2);
+    primes.push_back(5);
+    primes.push_back(7);
+    primes.push_back(9);
+
+    // print amount in vector
+    std::cout << primes.size() << "\n";
+
+    // you can now print the value pushed, based on index (remember N-1)
+    std::cout << primes[2] << "\n"; // should print 7
+
+    primes[2] = 13;
+
+    std::cout << primes[2] << "\n"; // should print 13
+
+    std::vector<cow_class> cattle;
+
+    cattle.push_back(cow_class("Test", 6, meat));
+    cattle.push_back(cow_class("Libby", 8, meat));
+    cattle.push_back(cow_class("Angel", 4, dairy));
+
+    // get first cow from index 0
+    std::cout << cattle.begin()->get_name() << "\n";
+
+    // get second to last cow
+    std::cout << std::prev(cattle.end(), 2)->get_name() << "\n";
+
+    // get last cow (N-1)
+    std::cout << (cattle.end() - 1)->get_name() << "\n";
 
     return 0;
 }
